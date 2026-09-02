@@ -5,6 +5,7 @@
     "facebook": "node facebook.js"
   },
   "dependencies": {
+    "archiver": "^8.0.0",
     "axios": "^1.12.2",
     "cheerio": "^1.1.2",
     "express": "^5.2.1",

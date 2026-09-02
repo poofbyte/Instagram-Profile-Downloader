@@ -6,6 +6,9 @@ package-lock.json
 cookie.json
 cookies.json
 *.cookie.json
+fb_cookie.json
+*_cookie.json
+
 
 # Downloaded files and outputs
 *.zip
