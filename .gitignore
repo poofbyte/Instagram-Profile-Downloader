@@ -3,11 +3,20 @@ node_modules/
 package-lock.json
 
 # Cookie files (IMPORTANT: Never commit your cookies!)
+*cookie*.json
+*cookies*.json
+*.cookie.json
+*.cookies.json
 cookie.json
 cookies.json
-*.cookie.json
 fb_cookie.json
+fb_cookies.json
+ig_cookie.json
+ig_cookies.json
 *_cookie.json
+*_cookies.json
+**/cookie*.json
+**/cookies*.json
 
 
 # Downloaded files and outputs

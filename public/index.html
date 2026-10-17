@@ -1,109 +1,377 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram Advanced Scraper</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Download high-resolution photos, reels, carousels, videos, and highlights from any Instagram profile at original quality.">
+  <meta name="referrer" content="no-referrer">
+  <title>InstaScrape Pro — Instagram Media Downloader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="background-orbs">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
+<body class="dark-theme">
+  <!-- Dynamic Glowing Background Accents -->
+  <div class="glow-orb orb-purple" aria-hidden="true"></div>
+  <div class="glow-orb orb-pink" aria-hidden="true"></div>
+  <div class="glow-orb orb-orange" aria-hidden="true"></div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="container header-container">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Insta<span class="gradient-text">Scrape</span></span>
+          <span class="brand-badge">PRO</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="giveCookiesBtn" class="btn btn-secondary btn-icon" title="Configure Session Cookies" aria-label="Give Cookies">
+          <span class="btn-emoji">🍪</span>
+          <span class="cookie-btn-label">Give Cookies</span>
+          <span id="cookieStatusDot" class="cookie-dot" title="Checking cookie status..."></span>
+        </button>
+        <button id="infoBtn" class="btn btn-secondary btn-icon" title="How It Works" aria-label="Information">
+          <span class="btn-emoji">ℹ️</span>
+          <span>Info</span>
+        </button>
+      </div>
     </div>
+  </header>
 
-    <div class="container">
-        <header>
-            <h1>InstaScrape <span class="badge">Pro</span></h1>
-            <p>Advanced Headless Media Downloader</p>
-            <div class="header-actions">
-                <button id="infoBtn" class="settings-btn" title="Information">ℹ️ Info</button>
-                <button id="settingsBtn" class="settings-btn" title="Configuration">⚙️ Settings</button>
+  <!-- Main Content -->
+  <main class="main-content">
+    <section class="hero-section">
+      <div class="container hero-container">
+        <div class="hero-tag">Profile Media Downloader</div>
+        <h1 class="hero-title">Download Instagram Media at <span class="gradient-text">Original Quality</span></h1>
+        <p class="hero-subtitle">Enter any Instagram profile username or URL to scan, preview, and download high-resolution photos, multi-slide carousels, reels, videos, and highlights.</p>
+
+        <!-- Search Bar Form -->
+        <form id="scanForm" class="search-form" autocomplete="off">
+          <div class="input-wrapper">
+            <div class="input-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
             </div>
-        </header>
+            <input 
+              type="text" 
+              id="profileInput" 
+              name="profileInput" 
+              placeholder="Enter username (e.g. natgeo) or instagram.com/profile URL..." 
+              required
+              spellcheck="false"
+            >
+            <button type="button" id="clearInputBtn" class="clear-btn" aria-label="Clear input" style="display: none;">
+              &times;
+            </button>
+          </div>
+          <div class="form-buttons">
+            <button type="submit" id="startScanBtn" class="btn btn-primary btn-glow">
+              <span id="scanBtnIcon">🚀</span>
+              <span id="scanBtnText">Scan Profile</span>
+            </button>
+            <button type="button" id="stopScanBtn" class="btn btn-danger" style="display: none;">
+              <span>⏹️</span>
+              <span>Stop Scan</span>
+            </button>
+          </div>
+        </form>
 
-        <main>
-            <!-- Modal Overlay for Info -->
-            <div id="infoModal" class="modal-overlay hidden">
-                <div class="glass-card modal info-section">
-                    <div class="modal-header">
-                        <h2>How It Works</h2>
-                        <button id="closeInfoBtn" class="close-btn">&times;</button>
-                    </div>
-                    <div class="info-content">
-                        <p><strong>InstaScrape Pro</strong> is an advanced, fully automated Instagram profile downloader.</p>
-                        
-                        <h3>✨ What It Does</h3>
-                        <ul>
-                            <li>Downloads <strong>all</strong> posts, reels, and videos from any profile.</li>
-                            <li>Perfectly extracts every single image inside <strong>Carousels</strong>.</li>
-                            <li>Automatically fetches the highest-resolution, original-quality media.</li>
-                            <li>Packages everything into a neat ZIP file for easy backup.</li>
-                        </ul>
+        <!-- Quick Examples -->
+        <div class="quick-examples">
+          <span class="examples-label">Try popular accounts:</span>
+          <button type="button" class="example-pill" data-profile="instagram">@instagram</button>
+          <button type="button" class="example-pill" data-profile="natgeo">@natgeo</button>
+          <button type="button" class="example-pill" data-profile="nasa">@nasa</button>
+        </div>
+      </div>
+    </section>
 
-                        <h3>📡 How It Does It</h3>
-                        <p>Unlike basic scrapers that try to click buttons on the screen, this tool uses <strong>Advanced Network Interception</strong>. It runs a hidden Chrome browser under the hood and silently captures the raw GraphQL and REST API data that Instagram's backend naturally sends. This guarantees 100% extraction accuracy without being blocked by UI updates.</p>
-                        
-                        <h3>🔒 Privacy & Security</h3>
-                        <p>Your cookies and data never leave your local machine. This tool is read-only and safe to use.</p>
-
-                        <div class="github-link-container">
-                            <a href="https://github.com/prayingforthelastsunbeam/Instagram-Profile-Downloader" target="_blank" class="github-link">
-                                ⭐ Star on GitHub
-                            </a>
-                        </div>
-                    </div>
-                </div>
+    <!-- Scan Progress & Live Terminal Output -->
+    <section id="progressSection" class="progress-section container hidden">
+      <div class="glass-card status-card">
+        <div class="status-header">
+          <div class="status-title-group">
+            <div class="spinner-ring" id="statusSpinner"></div>
+            <div>
+              <h3 id="statusHeading">Scanning In Progress...</h3>
+              <p id="statusSubtitle" class="text-muted">Connecting to Instagram and resolving target account...</p>
             </div>
+          </div>
+          <div class="status-badge" id="mediaCounterBadge">0 files isolated</div>
+        </div>
 
-            <!-- Modal Overlay for Settings -->
-            <div id="settingsModal" class="modal-overlay hidden">
-                <div class="glass-card modal config-section">
-                    <div class="modal-header">
-                        <h2>Configuration</h2>
-                        <button id="closeSettingsBtn" class="close-btn">&times;</button>
-                    </div>
-                    <p class="modal-desc">Authentication is required for private profiles or age-restricted content.</p>
-                    <div class="input-group">
-                        <label for="cookieInput">Paste your cookie.json content</label>
-                        <textarea id="cookieInput" placeholder='[{"domain": ".instagram.com", "name": "sessionid", "value": "..."}]'></textarea>
-                    </div>
-                </div>
-            </div>
+        <!-- Stepper Indicators -->
+        <div class="stepper-bar">
+          <div class="step-item active" id="step-init">
+            <div class="step-circle">1</div>
+            <span class="step-label">Init</span>
+          </div>
+          <div class="step-line" id="line-1"></div>
+          <div class="step-item" id="step-profile">
+            <div class="step-circle">2</div>
+            <span class="step-label">Profile</span>
+          </div>
+          <div class="step-line" id="line-2"></div>
+          <div class="step-item" id="step-feed">
+            <div class="step-circle">3</div>
+            <span class="step-label">Posts & Feed</span>
+          </div>
+          <div class="step-line" id="line-3"></div>
+          <div class="step-item" id="step-highlights">
+            <div class="step-circle">4</div>
+            <span class="step-label">Highlights</span>
+          </div>
+          <div class="step-line" id="line-4"></div>
+          <div class="step-item" id="step-reels">
+            <div class="step-circle">5</div>
+            <span class="step-label">Reels</span>
+          </div>
+        </div>
 
-            <div class="glass-card target-section">
-                <h2>Target Profile</h2>
-                <div class="input-group row">
-                    <input type="text" id="urlInput" placeholder="https://www.instagram.com/username/">
-                    <button id="startBtn" class="primary-btn">Start Scraping</button>
-                </div>
+        <!-- Terminal Console -->
+        <div class="console-box">
+          <div class="console-top">
+            <div class="mac-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
             </div>
+            <span class="console-title">Extraction Live Output</span>
+            <div class="console-actions">
+              <button id="toggleScrollBtn" class="btn-text" title="Toggle Auto-Scroll">Auto-Scroll: ON</button>
+              <button id="clearConsoleBtn" class="btn-text" title="Clear Console">Clear</button>
+            </div>
+          </div>
+          <div id="consoleBody" class="console-body">
+            <!-- Injected via app.js -->
+          </div>
+        </div>
+      </div>
+    </section>
 
-            <div id="progressSection" class="glass-card console-section hidden">
-                <div class="console-header">
-                    <div class="dots"><span></span><span></span><span></span></div>
-                    <h3>Terminal Output</h3>
-                </div>
-                <div id="consoleOutput" class="console-body">
-                    <!-- Logs injected here -->
-                </div>
-                
-                <div id="resultSection" class="hidden result-actions">
-                    <a id="downloadZipBtn" class="primary-btn pulse" href="#" download>Download All (ZIP)</a>
-                </div>
+    <!-- Discovered Profile Information Header -->
+    <section id="profileSection" class="profile-section container hidden">
+      <div class="glass-card profile-card">
+        <div class="profile-avatar-wrap">
+          <img id="profileAvatar" src="" alt="Profile Avatar" class="profile-avatar" loading="lazy">
+        </div>
+        <div class="profile-info">
+          <div class="profile-title-row">
+            <h2 id="profileUsername" class="profile-username">@username</h2>
+            <span id="verifiedBadge" class="verified-badge hidden" title="Verified Account">✓</span>
+            <span id="privateBadge" class="private-badge hidden">🔒 Private</span>
+          </div>
+          <p id="profileFullName" class="profile-fullname">Full Name</p>
+          <p id="profileBio" class="profile-bio"></p>
+          
+          <div class="profile-stats">
+            <div class="stat-pill">
+              <span class="stat-num" id="statPostsCount">0</span>
+              <span class="stat-label">Posts on IG</span>
             </div>
+            <div class="stat-pill">
+              <span class="stat-num" id="statFollowersCount">0</span>
+              <span class="stat-label">Followers</span>
+            </div>
+            <div class="stat-pill stat-accent">
+              <span class="stat-num" id="statExtractedCount">0</span>
+              <span class="stat-label">Isolated Media</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-            <div id="gallerySection" class="glass-card gallery-section hidden">
-                <h2>Extracted Media</h2>
-                <div id="galleryGrid" class="gallery-grid">
-                    <!-- Media injected here -->
-                </div>
+    <!-- Gallery & Media Results Section -->
+    <section id="gallerySection" class="gallery-section container hidden">
+      <div class="glass-card gallery-container">
+        <!-- Controls Bar -->
+        <div class="gallery-toolbar">
+          <div class="gallery-tabs">
+            <button class="tab-btn active" data-filter="all" id="tabAll">
+              All <span class="tab-count" id="countAll">0</span>
+            </button>
+            <button class="tab-btn" data-filter="image" id="tabImages">
+              Photos <span class="tab-count" id="countImages">0</span>
+            </button>
+            <button class="tab-btn" data-filter="video" id="tabVideos">
+              Videos & Reels <span class="tab-count" id="countVideos">0</span>
+            </button>
+            <button class="tab-btn" data-filter="carousel" id="tabCarousels">
+              Carousels <span class="tab-count" id="countCarousels">0</span>
+            </button>
+            <button class="tab-btn" data-filter="highlight" id="tabHighlights">
+              Highlights <span class="tab-count" id="countHighlights">0</span>
+            </button>
+          </div>
+
+          <div class="gallery-actions">
+            <button id="selectAllBtn" class="btn btn-secondary btn-sm">Select All</button>
+            <button id="downloadSelectedBtn" class="btn btn-secondary btn-sm" disabled>
+              <span>⬇️</span> Download Selected (<span id="selectedCount">0</span>)
+            </button>
+            <button id="downloadAllZipBtn" class="btn btn-primary btn-sm btn-glow">
+              <span>📦</span> Download All (ZIP)
+            </button>
+          </div>
+        </div>
+
+        <!-- Media Grid -->
+        <div id="mediaGrid" class="media-grid">
+          <!-- Rendered dynamically via app.js -->
+        </div>
+
+        <div id="noResultsNotice" class="no-results hidden">
+          <p>No media files match the selected filter.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Give Cookies Modal -->
+  <div id="cookieModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="cookieModalTitle">
+    <div class="glass-card modal-box">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-emoji">🍪</span>
+          <h2 id="cookieModalTitle">Give Cookies (Session Authentication)</h2>
+        </div>
+        <button id="closeCookieModalBtn" class="modal-close-btn" aria-label="Close modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Active Status Card -->
+        <div id="cookieStatusCard" class="cookie-status-card">
+          <div class="status-indicator-box">
+            <div id="modalStatusDot" class="status-dot"></div>
+            <div>
+              <h4 id="modalStatusTitle">Checking cookies...</h4>
+              <p id="modalStatusDesc" class="text-muted">Loading cookie state from server...</p>
             </div>
-        </main>
+          </div>
+        </div>
+
+        <p class="modal-explanation">
+          Authentication is required for private profiles, age-restricted content, and complete access to all carousels, reels, and highlights.
+        </p>
+
+        <!-- Input Tabs -->
+        <div class="cookie-input-tabs">
+          <button class="cookie-tab-btn active" id="tabPaste">Paste Cookies (JSON / Text)</button>
+          <button class="cookie-tab-btn" id="tabUpload">Upload File (cookies.json)</button>
+        </div>
+
+        <!-- Tab 1: Paste Input -->
+        <div id="panelPaste" class="cookie-panel active">
+          <div class="input-group">
+            <label for="cookieTextarea">Paste exported JSON array or Header string:</label>
+            <textarea 
+              id="cookieTextarea" 
+              rows="6" 
+              placeholder='[{"domain": ".instagram.com", "name": "sessionid", "value": "..."}, {"name": "ds_user_id", "value": "..."}]'
+              spellcheck="false"
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- Tab 2: File Upload -->
+        <div id="panelUpload" class="cookie-panel">
+          <div class="file-dropzone" id="fileDropzone">
+            <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            <p>Click or drag & drop your <code>cookies.json</code> or <code>cookie.json</code> file here</p>
+            <input type="file" id="cookieFileInput" accept=".json,.txt" style="display: none;">
+          </div>
+          <p id="selectedFileLabel" class="text-muted file-selected-text"></p>
+        </div>
+
+        <!-- Quick 3-Step Guide -->
+        <details class="cookie-guide">
+          <summary>💡 How to get your Instagram cookies safely in 15 seconds</summary>
+          <div class="guide-steps">
+            <ol>
+              <li>Install the free <strong>Cookie-Editor</strong> extension in Chrome/Brave/Edge/Firefox.</li>
+              <li>Log in to <a href="https://www.instagram.com" target="_blank" rel="noopener">instagram.com</a> in your browser.</li>
+              <li>Click the <strong>Cookie-Editor</strong> icon in your browser toolbar.</li>
+              <li>Click <strong>Export</strong> &rarr; <strong>Export as JSON</strong>.</li>
+              <li>Paste here and click <strong>Save & Apply Cookies</strong>.</li>
+            </ol>
+            <p class="text-muted"><small>🔒 Your cookies are strictly stored locally on your machine and never transmitted to third parties.</small></p>
+          </div>
+        </details>
+      </div>
+
+      <div class="modal-footer">
+        <button id="clearCookiesBtn" class="btn btn-secondary">Clear Cookies</button>
+        <button id="saveCookiesBtn" class="btn btn-primary btn-glow">Save & Apply Cookies</button>
+      </div>
     </div>
-    
-    <script src="app.js"></script>
+  </div>
+
+  <!-- Info Modal -->
+  <div id="infoModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="glass-card modal-box info-modal-box">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-emoji">ℹ️</span>
+          <h2>About InstaScrape Pro</h2>
+        </div>
+        <button id="closeInfoModalBtn" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body info-content">
+        <h3>🎯 Strict Profile Isolation</h3>
+        <p>Unlike basic scrapers that accidentally collect suggested accounts, explore feed items, and sidecar ads, InstaScrape Pro strictly isolates the target account using numeric PK validation, author filtering, and targeted GraphQL network interception.</p>
+
+        <h3>✨ Features & Media Coverage</h3>
+        <ul>
+          <li><strong>High-Resolution Photos:</strong> Picks original, uncompressed image assets.</li>
+          <li><strong>Multi-Slide Carousels:</strong> Unpacks and downloads 100% of the slides inside every carousel post.</li>
+          <li><strong>Reels & Videos:</strong> Captures high-definition progressive MP4 versions.</li>
+          <li><strong>Highlights:</strong> Automatically extracts stories from profile highlights.</li>
+          <li><strong>Fast ZIP Packaging:</strong> Uses STORE compression to package hundreds of media files in seconds.</li>
+          <li><strong>Shared Engine:</strong> The terminal CLI (<code>npm run instagram</code>) and this Web App share the exact same extraction pipeline.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Media Lightbox Modal -->
+  <div id="lightboxModal" class="lightbox-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="lightbox-content">
+      <button id="closeLightboxBtn" class="lightbox-close">&times;</button>
+      <div class="lightbox-media-container" id="lightboxMediaContainer">
+        <!-- Injected dynamically -->
+      </div>
+      <div class="lightbox-details">
+        <div class="lightbox-meta">
+          <span id="lightboxCategory" class="badge">POST</span>
+          <span id="lightboxResolution" class="text-muted">1080x1080</span>
+        </div>
+        <p id="lightboxCaption" class="lightbox-caption"></p>
+        <div class="lightbox-actions">
+          <a id="lightboxIgLink" href="#" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">View on Instagram</a>
+          <a id="lightboxDownloadBtn" href="#" class="btn btn-primary btn-sm">Download File</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
 </body>
 </html>

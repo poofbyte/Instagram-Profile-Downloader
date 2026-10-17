@@ -1,57 +1,45 @@
-# 📸 Social Media Profile & Media Downloader
+# 📸 InstaScrape Pro — Instagram Profile Media Downloader
 
-An advanced, automated **Instagram & Facebook profile media downloader** available as both an **Interactive Web Dashboard** and **Command-Line Interface (CLI)**.
+An advanced, automated **Instagram profile media downloader** available as both a **Stunning Interactive Web Dashboard** and a **Command-Line Interface (CLI)**.
 
-It intercepts GraphQL/API responses directly from headless browser sessions to extract high-resolution photos, carousels, reels, and videos, packaging them into convenient ZIP archives.
+It uses targeted GraphQL & REST API response interception with **Strict Profile Isolation** to extract high-resolution photos, multi-slide carousels, reels, videos, and highlights—packaging everything into clean, organized ZIP backups without mixed content.
 
 ---
 
 ## ✨ Features
 
-- 🌐 **Web Dashboard & REST API** – Modern web interface with real-time progress streaming (Server-Sent Events) and instant media preview gallery.
-- 💻 **Terminal CLI Tools** – Standalone command-line scrapers for Instagram and Facebook.
-- 🦁 **Smart Multi-Browser Auto-Detection** – Out-of-the-box support for **Brave Browser**, **Google Chrome**, **Microsoft Edge**, and bundled **Puppeteer Chromium**.
-- 📡 **Advanced Network Interception** – Intercepts native GraphQL & REST API responses for 100% extraction accuracy and maximum resolution.
-- 🍪 **Cookie Authentication** – Easily bypass login walls for private profiles and full-profile pagination using `cookie.json` and `fb_cookie.json`.
-- 🎠 **Full Carousel & Reel Extraction** – Captures nested multi-slide posts, reels, and videos automatically.
-- 📦 **Automated ZIP Bundling** – Automatically compresses media into organized ZIP archives with sequential file naming.
-- 🔒 **Read-Only & Secure** – Runs locally without liking, commenting, or making account modifications.
+- 🎯 **Strict Profile Isolation** – Guarantees media belongs *exclusively* to the requested profile by validating numeric user IDs (PK) and author data, completely eliminating mixed-in content from suggested accounts, ads, stories trays, or explore suggestions.
+- 🍪 **Reliable "Give Cookies" UI** – Built-in modal with real-time authentication status, support for pasting JSON / Header cookies, drag-and-drop file upload (`cookies.json` or `cookie.json`), and instant server synchronization.
+- 💻 **Unified CLI & Web Architecture** – Terminal CLI (`npm run instagram`) and the Web App share the exact same underlying extraction engine (`lib/instagram-scraper.js`).
+- 🎠 **Multi-Slide Carousel Unpacking** – Extracts 100% of the slides in every carousel album with individual slide numbering.
+- 🎬 **Reels & High-Definition Videos** – Automatically captures full-resolution progressive MP4 video streams.
+- ⭐ **Highlights Extraction** – Automatically discovers and downloads stories from profile highlights.
+- 📦 **Fast ZIP Packaging** – Uses `STORE` compression to package hundreds of media files into ZIP archives in seconds without CPU bottlenecking.
+- 🎨 **Modern Glassmorphic Dark UI** – Tailored with Instagram brand gradients, live stage stepper progress bar, filter tabs (Photos, Videos, Carousels, Highlights), multi-select checkboxes, and media lightbox preview.
+- 🦁 **Multi-Browser Auto-Detection** – Automatically detects Google Chrome, Brave Browser, Microsoft Edge, or bundled Puppeteer Chromium.
 
 ---
 
-## 📸 Supported Platforms & Media Types
+## 📸 Supported Media Types
 
-| Platform | Posts | Carousels | Reels / Videos | Private Accounts (with cookies) |
-| :--- | :---: | :---: | :---: | :---: |
-| **Instagram** | ✅ | ✅ | ✅ | ✅ |
-| **Facebook** | ✅ | ✅ | ✅ | ✅ |
-
----
-
-## 🛠️ Browser Compatibility
-
-The downloader automatically detects installed Chromium browsers on Windows, macOS, and Linux:
-
-- 🦁 **Brave Browser** (`brave.exe`)
-- 🌐 **Google Chrome** (`chrome.exe`)
-- 🔷 **Microsoft Edge** (`msedge.exe`)
-- 📦 **Puppeteer Bundled Chromium** (Fallback)
-
-> **Custom Path Support:** You can set a custom browser path using the environment variable `BROWSER_PATH`:
-> ```bash
-> process.env.BROWSER_PATH="C:\\Path\\To\\browser.exe" node index.js
-> ```
+| Media Type | Supported | Notes |
+| :--- | :---: | :--- |
+| **Grid Posts (Photos)** | ✅ | Highest resolution JPEG/PNG selected by area |
+| **Carousel Albums** | ✅ | All slides unpacked with sequential indexing |
+| **Reels & Feed Videos** | ✅ | Progressive MP4 video versions |
+| **Profile Highlights** | ✅ | Story media extracted directly from highlight reels |
+| **Private Profiles** | ✅ | Fully supported when cookies from a follower are provided |
 
 ---
 
 ## 📋 Prerequisites
 
-- **Node.js** (v16 or higher) – [Download Node.js](https://nodejs.org/)
-- **Brave, Chrome, or Edge** installed on your system.
+- **Node.js** (v18 or higher)
+- **Google Chrome**, **Brave**, or **Microsoft Edge** installed.
 
 ---
 
-## 🚀 Installation & Setup
+## 🚀 Installation & Quick Start
 
 1. **Clone or Download the Repository:**
    ```bash
@@ -65,11 +53,8 @@ The downloader automatically detects installed Chromium browsers on Windows, mac
    ```
 
 3. **Set Up Authentication Cookies (Recommended):**
-
-   Export cookies from your browser using an extension like **Cookie-Editor** or **EditThisCookie**:
-
-   - **For Instagram:** Save exported JSON cookies as `cookie.json` in the root directory.
-   - **For Facebook:** Save exported JSON cookies as `fb_cookie.json` in the root directory.
+   - Save your exported cookies as `cookies.json` or `cookie.json` in the project root directory, OR
+   - Simply start the Web App and use the **🍪 Give Cookies** button to paste or upload your cookie file.
 
 ---
 
@@ -77,19 +62,26 @@ The downloader automatically detects installed Chromium browsers on Windows, mac
 
 ### Method 1: Web Dashboard (Recommended)
 
-1. Start the web server:
+1. Start the server:
    ```bash
    npm start
    ```
-2. Open your browser and navigate to:
+
+2. Open your browser:
    ```
    http://localhost:3000
    ```
-3. Enter the Instagram profile URL, paste your cookie JSON if prompted, and click **Start Download**. Watch the real-time progress and download the ZIP file directly when completed!
+
+3. Features on the dashboard:
+   - Click **🍪 Give Cookies** to check your login status, paste cookies, or upload `cookies.json`.
+   - Enter any Instagram username (e.g. `natgeo`) or profile URL and click **Scan Profile**.
+   - Monitor the live stepper and color-coded terminal log.
+   - Filter by **Photos**, **Videos & Reels**, **Carousels**, or **Highlights**.
+   - Multi-select media cards and click **Download Selected (ZIP)** or **Download All (ZIP)**.
 
 ---
 
-### Method 2: Instagram Downloader (CLI)
+### Method 2: Terminal CLI
 
 1. Run the Instagram CLI downloader:
    ```bash
@@ -97,86 +89,34 @@ The downloader automatically detects installed Chromium browsers on Windows, mac
    # or
    node index.js
    ```
-2. Paste the target profile URL:
+
+2. Enter the target profile username or URL when prompted:
    ```
-   🔗 Enter Instagram profile URL: https://www.instagram.com/target_username/
+   📸  INSTAGRAM PROFILE MEDIA DOWNLOADER (PRO)
+   🍪 Authentication: ACTIVE (11 cookies loaded from cookies.json)
+   👤 Logged in as User ID: 20298931857
+
+   🔗 Enter Instagram profile URL or username: natgeo
    ```
-3. The script will automatically load cookies, detect your browser, scroll the profile, download high-res media, and produce `target_username.zip`.
+
+3. The CLI extracts all profile media, downloads the files to `./<username>/`, and creates `<username>.zip`.
 
 ---
 
-### Method 3: Facebook Downloader (CLI)
+## 🏗️ Architecture & Modules
 
-1. Run the Facebook CLI downloader:
-   ```bash
-   npm run facebook
-   # or
-   node facebook.js
-   ```
-2. Paste the target Facebook page/profile URL when prompted.
+The project is structured into clean, modular libraries:
 
----
-
-## 📁 Project Architecture
-
-```
-Instagram-Profile-Downloader/
-├── browserHelper.js      # Smart auto-detector for Brave, Chrome, Edge
-├── index.js              # Instagram CLI profile downloader
-├── facebook.js           # Facebook CLI profile downloader
-├── scraper.js            # Core scraping & network interception engine
-├── server.js            # Express web server & SSE API endpoints
-├── public/               # Web application UI assets
-│   ├── index.html        # Dashboard interface
-│   ├── app.js            # Dashboard logic & SSE event receiver
-│   └── style.css         # Modern dark-mode styling
-├── cookie.json           # Instagram authentication cookies (optional)
-├── fb_cookie.json        # Facebook authentication cookies (optional)
-├── package.json          # Node.js configuration & npm scripts
-└── README.md             # Project documentation
-```
-
----
-
-## ⚙️ Configuration & Customization
-
-### Adjusting Scroll Limit & Timeout
-To customize scrolling attempts or network timeouts for extra-large profiles, modify the scroll loop parameters in `index.js` or `scraper.js`:
-
-```javascript
-// Change scroll attempt thresholds or delay times in scroll loop
-while (scrollAttempts < 5) { ... }
-```
-
-### Filtering Low-Resolution Thumbnails
-`scraper.js` and `index.js` automatically filter out low-res thumbnails (`150x150`, profile avatars, previews). You can modify patterns in `filterHighResUrls`:
-
-```javascript
-const lowResPatterns = [ /thumb/i, /avatar/i, /150x150/i, /320x320/i ];
-```
+- `lib/instagram-scraper.js`: Core scraping engine that navigates profile pages, manages pagination, intercepts network data, extracts highlights, and discovers reels.
+- `lib/media-extractor.js`: Handles URL normalization, strict profile isolation (`isTargetUserMedia`), resolution picking, carousel slide extraction, and filename sanitization.
+- `lib/cookie-manager.js`: Centralized cookie manager supporting `cookies.json` and `cookie.json`, format parsing, validation, and persistence.
+- `lib/zip-builder.js`: Fast concurrent media downloading with STORE-compression ZIP creation and HTTP streaming.
+- `server.js`: Express web server with SSE real-time streaming, image proxy, and REST endpoints.
+- `index.js`: Terminal interface utilizing the unified scraper engine.
+- `public/`: Modern frontend with HTML5, vanilla CSS, and JavaScript.
 
 ---
 
 ## 🔒 Privacy & Safety
 
-- **100% Local Execution:** All network traffic and downloaded media remain entirely on your local machine.
-- **Non-Intrusive Scraping:** Operates in read-only mode without making likes, comments, or account mutations.
-- **Isolated Sessions:** Browsing automation runs in separate headless browser instances without altering your existing browser profiles or open tabs.
-
----
-
-## 🛠️ Troubleshooting
-
-- **Browser Executable Not Found:**
-  - Make sure Brave, Chrome, or Edge is installed.
-  - Or set `BROWSER_PATH` environment variable pointing to your browser executable.
-- **Private Profile / No Media Found:**
-  - Verify that `cookie.json` is updated with active session cookies from an account following the target private profile.
-- **Rate Limit Warnings:**
-  - Add small delays between consecutive downloads if processing multiple profiles back-to-back.
-
----
-
-## 📄 License
-
-Distributed under the **MIT License**. Free for personal and educational use.
+Your cookies, credentials, and downloaded media remain entirely on your local machine. This tool is read-only and never performs automated actions (no following, liking, or commenting).
